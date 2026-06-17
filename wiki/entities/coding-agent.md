@@ -5,9 +5,9 @@ title: Coding Agent
 slug: coding-agent
 aliases: [编码 Agent]
 created_at: "2026-06-17T21:40:08+08:00"
-updated_at: "2026-06-17T21:40:08+08:00"
+updated_at: "2026-06-17T21:40:16+08:00"
 sources: [src_20260617_ehuczv]
-related: [summary_src_20260617_ehuczv, entity_long-running-agents, entity_initializer-agent]
+related: [summary_src_20260617_ehuczv, entity_long-running-agents, entity_initializer-agent, entity_feature-list]
 ---
 
 # Coding Agent
@@ -21,4 +21,5 @@ Coding Agent 是初始化完成后反复接力的执行角色。`src_20260617_eh
 - [[Summary for src_20260617_ehuczv]]
 - [[Long-running agents]]
 - [[Initializer Agent]]
+- [[Feature list]]
 <!-- kb:related:end -->

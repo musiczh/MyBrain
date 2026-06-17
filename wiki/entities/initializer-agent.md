@@ -5,9 +5,9 @@ title: Initializer Agent
 slug: initializer-agent
 aliases: [初始化 Agent]
 created_at: "2026-06-17T21:40:01+08:00"
-updated_at: "2026-06-17T21:40:08+08:00"
+updated_at: "2026-06-17T21:40:16+08:00"
 sources: [src_20260617_ehuczv]
-related: [summary_src_20260617_ehuczv, entity_long-running-agents, entity_coding-agent]
+related: [summary_src_20260617_ehuczv, entity_long-running-agents, entity_coding-agent, entity_feature-list]
 ---
 
 # Initializer Agent
@@ -21,4 +21,5 @@ Initializer Agent 是长任务 harness 中只在第一次会话运行的专门�
 - [[Summary for src_20260617_ehuczv]]
 - [[Long-running agents]]
 - [[Coding Agent]]
+- [[Feature list]]
 <!-- kb:related:end -->

@@ -2,6 +2,7 @@
 
 ## 实体
 - [Coding Agent](entities/coding-agent.md) - `entity_coding-agent`
+- [Feature list](entities/feature-list.md) - `entity_feature-list`
 - [Initializer Agent](entities/initializer-agent.md) - `entity_initializer-agent`
 - [Long-running agents](entities/long-running-agents.md) - `entity_long-running-agents`
 
