@@ -5,9 +5,9 @@ title: Feature list
 slug: feature-list
 aliases: [功能清单, feature_list.json]
 created_at: "2026-06-17T21:40:16+08:00"
-updated_at: "2026-06-17T21:40:16+08:00"
+updated_at: "2026-06-17T21:40:31+08:00"
 sources: [src_20260617_ehuczv]
-related: [summary_src_20260617_ehuczv, entity_initializer-agent, entity_coding-agent]
+related: [summary_src_20260617_ehuczv, entity_initializer-agent, entity_coding-agent, topic_agent-长任务工程化]
 ---
 
 # Feature list
@@ -21,4 +21,5 @@ Feature list 是长任务 Agent harness 的结构化任务账本。`src_20260617
 - [[Summary for src_20260617_ehuczv]]
 - [[Initializer Agent]]
 - [[Coding Agent]]
+- [[Agent 长任务工程化]]
 <!-- kb:related:end -->

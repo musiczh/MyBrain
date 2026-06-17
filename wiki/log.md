@@ -6,3 +6,4 @@
 - 2026-06-17T21:40:08+08:00 | upsert entity | entity_coding-agent | Coding Agent
 - 2026-06-17T21:40:16+08:00 | upsert entity | entity_feature-list | Feature list
 - 2026-06-17T21:40:22+08:00 | upsert entity | entity_claude-agent-sdk | Claude Agent SDK
+- 2026-06-17T21:40:31+08:00 | upsert topic | topic_agent-长任务工程化 | Agent 长任务工程化

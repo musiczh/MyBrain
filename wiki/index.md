@@ -8,8 +8,7 @@
 - [Long-running agents](entities/long-running-agents.md) - `entity_long-running-agents`
 
 ## 主题
-
-暂无。
+- [Agent 长任务工程化](topics/agent-长任务工程化.md) - `topic_agent-长任务工程化`
 
 ## 摘要
 - [Summary for src_20260617_ehuczv](summaries/src_20260617_ehuczv.md) - `summary_src_20260617_ehuczv`
