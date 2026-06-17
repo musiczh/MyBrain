@@ -1,8 +1,7 @@
 # 知识库索引
 
 ## 实体
-
-暂无。
+- [Long-running agents](entities/long-running-agents.md) - `entity_long-running-agents`
 
 ## 主题
 
