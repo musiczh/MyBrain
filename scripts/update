@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SOURCE="${BASH_SOURCE[0]}"
+while [[ -L "${SOURCE}" ]]; do
+  SOURCE_DIR="$(cd -P "$(dirname "${SOURCE}")" >/dev/null 2>&1 && pwd)"
+  SOURCE="$(readlink "${SOURCE}")"
+  [[ "${SOURCE}" != /* ]] && SOURCE="${SOURCE_DIR}/${SOURCE}"
+done
+
+SCRIPT_DIR="$(cd -P "$(dirname "${SOURCE}")" >/dev/null 2>&1 && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/.." >/dev/null 2>&1 && pwd)"
+BRANCH="${MYBRAIN_UPDATE_BRANCH:-master}"
+DO_PULL=1
+INSTALL_ARGS=()
+
+usage() {
+  cat <<'USAGE'
+Usage: scripts/update [options] [scripts/install options]
+
+Fast-forward this checkout from origin/master, then refresh the local Codex
+skill and kb CLI wrapper.
+
+Options:
+  --branch NAME      Remote branch to pull. Defaults to master.
+  --skip-pull        Skip git pull and only refresh local skill/CLI from current code.
+  -h, --help         Show this help.
+
+Any other option is passed through to scripts/install.
+USAGE
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --branch)
+      [[ $# -lt 2 ]] && { echo "--branch requires a name" >&2; exit 2; }
+      BRANCH="$2"
+      shift 2
+      ;;
+    --skip-pull)
+      DO_PULL=0
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      INSTALL_ARGS+=("$1")
+      shift
+      ;;
+  esac
+done
+
+if [[ "${DO_PULL}" -eq 1 ]]; then
+  if ! git -C "${REPO_ROOT}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "${REPO_ROOT} is not a git checkout; use --skip-pull to refresh from local files only." >&2
+    exit 1
+  fi
+
+  CURRENT_BRANCH="$(git -C "${REPO_ROOT}" branch --show-current || true)"
+  if [[ "${CURRENT_BRANCH}" != "${BRANCH}" ]]; then
+    echo "Current branch is '${CURRENT_BRANCH:-detached}', expected '${BRANCH}'." >&2
+    echo "Switch to ${BRANCH} before updating, or run scripts/update --skip-pull." >&2
+    exit 1
+  fi
+
+  if [[ -n "$(git -C "${REPO_ROOT}" status --porcelain)" ]]; then
+    echo "Working tree is not clean; commit or stash changes before pulling ${BRANCH}." >&2
+    exit 1
+  fi
+
+  git -C "${REPO_ROOT}" pull --ff-only origin "${BRANCH}"
+fi
+
+exec "${REPO_ROOT}/scripts/install" "${INSTALL_ARGS[@]}"

@@ -16,7 +16,8 @@ description: Use when the user wants to remember, organize, compile, query, or m
 
 ## 前置约束
 
-- CLI 入口是 `kb`。如果当前环境找不到 `kb`，在本机可使用 `/Users/bytedance/MyProject/MyBrain/scripts/kb`，或把该 wrapper 复制到 `~/.local/bin/kb`。
+- CLI 入口是 `kb`。标准安装方式：`git clone -b master https://github.com/musiczh/MyBrain.git && cd MyBrain && scripts/install`；后续更新本地 skill/CLI：在该仓库 `master` 分支运行 `scripts/update`。
+- 如果当前环境找不到 `kb`，先确认 `~/.local/bin` 在 PATH 中；也可以在仓库内直接使用 `scripts/kb`。
 - 默认知识库实例固定在 `~/.local/share/mybrain/default`；首次使用 `kb ingest/search/plan/...` 且该目录尚未初始化时，系统会自动初始化。
 - 不要在当前代码仓库根目录创建 `.kb/`、`raw/`、`wiki/`、`schema/` 或 `dist/` 作为知识库实例内容。
 - 不要让本系统抓网页、读公众号、读飞书或接微信。你需要先自行把外部内容读取并清洗为纯文本。

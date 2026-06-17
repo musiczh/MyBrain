@@ -12,6 +12,18 @@
 {"ok": false, "error": {"code": "...", "message": "...", "detail": {}}}
 ```
 
+## 安装与更新
+
+```bash
+git clone -b master https://github.com/musiczh/MyBrain.git
+cd MyBrain
+scripts/install
+scripts/update
+```
+
+- `scripts/install` 会把 `kb-skill/` 同步到 `${CODEX_HOME:-~/.codex}/skills/knowledge-base`，把 Python 包安装到本仓库 `.venv`，并写入 `~/.local/bin/kb`。
+- `scripts/update` 会用 `--ff-only` 拉取 `origin/master` 后重新运行 `scripts/install`；只想从当前代码刷新本地 skill/CLI 时，使用 `scripts/update --skip-pull`。
+
 ## 初始化
 
 ```bash
