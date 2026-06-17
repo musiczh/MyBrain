@@ -9,6 +9,7 @@
 
 ## 主题
 - [Agent 长任务工程化](topics/agent-长任务工程化.md) - `topic_agent-长任务工程化`
+- [AI 编码 Agent 验证](topics/ai-编码-agent-验证.md) - `topic_ai-编码-agent-验证`
 - [跨会话交接协议](topics/跨会话交接协议.md) - `topic_跨会话交接协议`
 
 ## 摘要
