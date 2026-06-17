@@ -5,9 +5,9 @@ title: Agent 长任务工程化
 slug: agent-长任务工程化
 aliases: []
 created_at: "2026-06-17T21:40:31+08:00"
-updated_at: "2026-06-17T21:40:31+08:00"
+updated_at: "2026-06-17T21:40:56+08:00"
 sources: [src_20260617_ehuczv]
-related: [summary_src_20260617_ehuczv, entity_long-running-agents, entity_initializer-agent, entity_coding-agent, entity_feature-list]
+related: [summary_src_20260617_ehuczv, entity_long-running-agents, entity_initializer-agent, entity_coding-agent, entity_feature-list, topic_跨会话交接协议]
 ---
 
 # Agent 长任务工程化
@@ -30,4 +30,5 @@ Agent 长任务工程化关注如何让 AI Agent 在多次会话、多个上下�
 - [[Initializer Agent]]
 - [[Coding Agent]]
 - [[Feature list]]
+- [[跨会话交接协议]]
 <!-- kb:related:end -->
