@@ -5,9 +5,9 @@ title: Long-running agents
 slug: long-running-agents
 aliases: [长时间运行 Agent, 长任务 Agent]
 created_at: "2026-06-17T21:39:52+08:00"
-updated_at: "2026-06-17T21:40:08+08:00"
+updated_at: "2026-06-17T21:40:22+08:00"
 sources: [src_20260617_ehuczv]
-related: [summary_src_20260617_ehuczv, entity_initializer-agent, entity_coding-agent]
+related: [summary_src_20260617_ehuczv, entity_initializer-agent, entity_coding-agent, entity_claude-agent-sdk]
 ---
 
 # Long-running agents
@@ -21,4 +21,5 @@ Long-running agents 指需要跨多个上下文窗口或多次会话持续推进
 - [[Summary for src_20260617_ehuczv]]
 - [[Initializer Agent]]
 - [[Coding Agent]]
+- [[Claude Agent SDK]]
 <!-- kb:related:end -->

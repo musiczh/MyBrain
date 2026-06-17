@@ -1,6 +1,7 @@
 # 知识库索引
 
 ## 实体
+- [Claude Agent SDK](entities/claude-agent-sdk.md) - `entity_claude-agent-sdk`
 - [Coding Agent](entities/coding-agent.md) - `entity_coding-agent`
 - [Feature list](entities/feature-list.md) - `entity_feature-list`
 - [Initializer Agent](entities/initializer-agent.md) - `entity_initializer-agent`
