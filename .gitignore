@@ -4,8 +4,10 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .venv/
-dist/
+/dist/
+/raw/
+/wiki/
+/schema/
+/.kb/
 build/
 *.egg-info/
-.kb/index.sqlite
-.kb/.lock

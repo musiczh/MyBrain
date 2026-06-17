@@ -1,6 +1,6 @@
 # 新增文章工作流
 
-目标：把一篇外部 Agent 已清洗好的文章纯文本写入原料层，并由 Agent 编译为摘要、实体、主题和关联。
+目标：把一篇外部 Agent 已读取到的完整原文写入原料层，并由 Agent 编译为摘要、实体、主题和关联。原料层负责保留完整原始数据，写入后只读。
 
 ## 步骤
 
@@ -10,15 +10,27 @@
    kb search "<文章标题或核心关键词>" --layer wiki --json
    ```
 
-2. 写入原料层：
+2. 获取完整原文：
+
+   - 如果用户给 URL：你先读取链接对应页面/文档的完整正文，保留原 URL。
+   - 如果用户给本地文档：你先读取本地文件的完整正文，保留本地路径。
+   - 不要只存摘要、节选、清洗后的片段或检索结果。
+
+3. 写入原料层：
 
    ```bash
    kb ingest --type article --text-file article.txt --source-url "<可选来源>" --json
    ```
 
+   本地文档使用：
+
+   ```bash
+   kb ingest --type article --text-file article.txt --source-path "<本地文档路径>" --json
+   ```
+
    如果返回 `duplicated: true`，告知用户该内容已存在，停止本流程。
 
-3. 获取编译上下文：
+4. 获取编译上下文：
 
    ```bash
    kb plan <raw_id> --json
@@ -26,44 +38,44 @@
 
    读取返回的 `text`、`schema` 和 `related_pages`。
 
-4. 你用 LLM 生成编译结果：
+5. 你用 LLM 生成编译结果：
 
    - 300 字以内结构化摘要。
    - 不超过 10 个关键实体。
    - 0-3 个最相关主题。
    - 强相关页面列表，避免弱相关泛链。
 
-5. 写摘要页：
+6. 写摘要页：
 
    ```bash
    kb summary <raw_id> --text-file summary.md --json
    ```
 
-6. 对每个实体先判断是否已有页面。已有则更新或追加新观点；没有则新建：
+7. 对每个实体先判断是否已有页面。已有则更新或追加新观点；没有则新建：
 
    ```bash
    kb entity upsert "<实体标题>" --body-file entity.md --source <raw_id> --related <page_id> --json
    ```
 
-7. 对主题页做跨源综合：
+8. 对主题页做跨源综合：
 
    ```bash
    kb topic upsert "<主题标题>" --body-file topic.md --source <raw_id> --related <page_id> --json
    ```
 
-8. 对强相关页面建立双向关系：
+9. 对强相关页面建立双向关系：
 
    ```bash
    kb link <page_id_a> <page_id_b> --json
    ```
 
-9. 回填原料状态和标签：
+10. 记录编译状态和标签：
 
    ```bash
    kb compiled <raw_id> --tag "<标签1>" --tag "<标签2>" --json
    ```
 
-10. 向用户汇报本次新建/更新的摘要、实体、主题和主要关联。
+11. 向用户汇报本次新建/更新的摘要、实体、主题和主要关联。
 
 ## 判断标准
 
@@ -71,3 +83,4 @@
 - 同一概念存在别名时，优先更新已有实体页并补 `--alias`。
 - 主题页应做跨源综合，不要复制摘要页内容。
 - 每个正文观点应保留来源 id，便于后续回溯。
+- 原料页必须能通过 `kb get-raw <raw_id>` 读回完整原始正文；不要修改 `raw/*` 文件。

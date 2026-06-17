@@ -25,12 +25,19 @@ def ingest(
     text: str,
     title: str | None = None,
     source_url: str | None = None,
+    source_path: str | None = None,
     author: str | None = None,
     context: str | None = None,
 ) -> dict[str, Any]:
     with ProjectLock(project.path(".kb", ".lock")):
         item = Normalizer().build(text, raw_type, title)
-        record = RawStore(project).add(item, source_url=source_url, author=author, context=context)
+        record = RawStore(project).add(
+            item,
+            source_url=source_url,
+            source_path=source_path,
+            author=author,
+            context=context,
+        )
         commit = ""
         if not record.duplicated:
             commit = GitRepo(project.root).commit(f'ingest: add {record.type} {record.id} "{record.title}"', [record.path])
@@ -89,8 +96,9 @@ def link_pages(project: Project, page_id_a: str, page_id_b: str) -> dict[str, An
 
 def mark_compiled(project: Project, raw_id: str, tags: list[str]) -> dict[str, Any]:
     with ProjectLock(project.path(".kb", ".lock")):
-        record = RawStore(project).mark_compiled(raw_id, tags)
-        commit = GitRepo(project.root).commit(f"compile: mark {raw_id} compiled", [record.path])
+        raw_store = RawStore(project)
+        record = raw_store.mark_compiled(raw_id, tags)
+        commit = GitRepo(project.root).commit(f"compile: mark {raw_id} compiled", [raw_store.status_path(raw_id)])
         return {"record": raw_record_to_dict(record), "commit": commit}
 
 

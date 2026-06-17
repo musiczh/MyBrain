@@ -135,12 +135,16 @@ def split_markdown(text: str) -> tuple[dict[str, Any], str]:
     if end == -1:
         return {}, text
     raw = text[4:end].strip()
-    body = text[end + 4 :].lstrip("\n")
+    body = text[end + 4 :]
+    if body.startswith("\n\n"):
+        body = body[2:]
+    elif body.startswith("\n"):
+        body = body[1:]
     return load_yaml(raw), body
 
 
 def compose_markdown(frontmatter: dict[str, Any], body: str) -> str:
-    return f"---\n{dump_yaml(frontmatter)}---\n\n{body.rstrip()}\n"
+    return f"---\n{dump_yaml(frontmatter)}---\n\n{body}"
 
 
 def load_markdown(path: Path) -> tuple[dict[str, Any], str]:

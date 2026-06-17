@@ -55,7 +55,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
     init_p = sub.add_parser("init", help="初始化知识库")
     init_p.add_argument("name")
-    init_p.add_argument("--root", default=".")
+    init_p.add_argument("--root")
     init_p.add_argument("--force", action="store_true")
     init_p.add_argument("--json", action="store_true")
     init_p.set_defaults(handler=_handle_init)
@@ -66,6 +66,7 @@ def _build_parser() -> argparse.ArgumentParser:
     ingest_p.add_argument("--text-file")
     ingest_p.add_argument("--title")
     ingest_p.add_argument("--source-url")
+    ingest_p.add_argument("--source-path")
     ingest_p.add_argument("--author")
     ingest_p.add_argument("--context")
     ingest_p.add_argument("--json", action="store_true")
@@ -102,7 +103,7 @@ def _build_parser() -> argparse.ArgumentParser:
     link_p.add_argument("--json", action="store_true")
     link_p.set_defaults(handler=_handle_link)
 
-    compiled_p = sub.add_parser("compiled", help="回填原料编译状态")
+    compiled_p = sub.add_parser("compiled", help="记录原料编译状态")
     compiled_p.add_argument("raw_id")
     compiled_p.add_argument("--tag", action="append", default=[])
     compiled_p.add_argument("--json", action="store_true")
@@ -160,7 +161,8 @@ def _add_page_args(parser: argparse.ArgumentParser) -> None:
 
 
 def _handle_init(args) -> tuple[dict[str, Any], str]:
-    data = init_project(Path(args.root), args.name, force=args.force)
+    root = Path(args.root) if args.root else Project.default_root()
+    data = init_project(root, args.name, force=args.force)
     return data, f"初始化完成：{data['root']}"
 
 
@@ -173,6 +175,7 @@ def _handle_ingest(args) -> tuple[dict[str, Any], str]:
         text=text,
         title=args.title,
         source_url=args.source_url,
+        source_path=args.source_path,
         author=args.author,
         context=args.context,
     )
@@ -216,7 +219,7 @@ def _handle_link(args) -> tuple[dict[str, Any], str]:
 
 def _handle_compiled(args) -> tuple[dict[str, Any], str]:
     data = mark_compiled(Project.resolve(), args.raw_id, args.tag)
-    return data, f"已标记 compiled：{args.raw_id}"
+    return data, f"已记录 compiled：{args.raw_id}"
 
 
 def _handle_search(args) -> tuple[dict[str, Any], str]:
@@ -312,7 +315,7 @@ if typer is not None:
     topic_app = typer.Typer(add_completion=False)
 
     @app.command("init")
-    def typer_init(name: str, root: str = ".", force: bool = False, json_output: bool = typer.Option(False, "--json")):
+    def typer_init(name: str, root: str | None = None, force: bool = False, json_output: bool = typer.Option(False, "--json")):
         _typer_run(lambda: _handle_init(argparse.Namespace(name=name, root=root, force=force, json=json_output)), json_output)
 
     @app.command("ingest")
@@ -322,6 +325,7 @@ if typer is not None:
         text_file: str | None = typer.Option(None, "--text-file"),
         title: str | None = None,
         source_url: str | None = typer.Option(None, "--source-url"),
+        source_path: str | None = typer.Option(None, "--source-path"),
         author: str | None = None,
         context: str | None = None,
         json_output: bool = typer.Option(False, "--json"),
@@ -334,6 +338,7 @@ if typer is not None:
                     text_file=text_file,
                     title=title,
                     source_url=source_url,
+                    source_path=source_path,
                     author=author,
                     context=context,
                     json=json_output,

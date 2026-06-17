@@ -15,22 +15,24 @@
 ## 初始化
 
 ```bash
-kb init "<name>" [--root .] [--force] [--json]
+kb init "<name>" [--root <path>] [--force] [--json]
 ```
 
-创建 `.kb/`、`raw/`、`wiki/`、`schema/`、`dist/`，写默认 schema，构建空索引并提交初始 Git 版本。
+不传 `--root` 时创建固定本地知识库 `~/.local/share/mybrain/default`。其他命令首次运行时如果该目录尚未初始化，也会自动创建默认知识库。
+
+初始化会创建 `.kb/`、`raw/`、`wiki/`、`schema/`、`dist/`，写默认 schema，构建空索引并提交初始 Git 版本。知识库实例内容不应放在系统源码仓库中。
 
 ## 原料层
 
 ```bash
-kb ingest --type article|thought|note --text "<文本>" [--title "..."] [--source-url "..."] [--author "..."] [--context "..."] [--json]
-kb ingest --type article --text-file article.txt --json
+kb ingest --type article|thought|note --text "<文本>" [--title "..."] [--source-url "..."] [--source-path "..."] [--author "..."] [--context "..."] [--json]
+kb ingest --type article --text-file article.txt [--source-url "..."] [--source-path "..."] --json
 kb ingest --type article --text - --json
 kb get-raw <raw_id> [--json]
 kb compiled <raw_id> --tag "<标签>" [--tag "..."] [--json]
 ```
 
-`ingest` 返回 `record.id`、`duplicated` 和 `commit`。原料正文不可修改，`compiled` 只回填 metadata。
+`ingest` 返回 `record.id`、`duplicated` 和 `commit`。传入 URL 时，调用方 Agent 必须先读取完整正文，再用 `--source-url` 保留原链接；传入本地文档时，调用方 Agent 必须先读取完整正文，再用 `--source-path` 保留本地路径。原料正文和 frontmatter 创建后不可修改，`compiled` 只写 `.kb/raw-status/<raw_id>.yaml`。
 
 ## 编译计划
 

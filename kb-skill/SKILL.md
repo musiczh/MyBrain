@@ -17,9 +17,14 @@ description: Use when the user wants to remember, organize, compile, query, or m
 ## 前置约束
 
 - CLI 入口是 `kb`。如果当前环境找不到 `kb`，在本机可使用 `/Users/bytedance/MyProject/MyBrain/scripts/kb`，或把该 wrapper 复制到 `~/.local/bin/kb`。
+- 默认知识库实例固定在 `~/.local/share/mybrain/default`；首次使用 `kb ingest/search/plan/...` 且该目录尚未初始化时，系统会自动初始化。
+- 不要在当前代码仓库根目录创建 `.kb/`、`raw/`、`wiki/`、`schema/` 或 `dist/` 作为知识库实例内容。
 - 不要让本系统抓网页、读公众号、读飞书或接微信。你需要先自行把外部内容读取并清洗为纯文本。
+- 如果用户传入 URL，先由你读取该链接对应的完整正文，再用 `kb ingest --type article --text-file ... --source-url "<原链接>"` 把完整原文写入 raw；raw 页面必须保留原链接。
+- 如果用户传入本地文档，先由你读取该文件的完整正文，再用 `kb ingest --type article --text-file ... --source-path "<本地路径>"` 把完整原文写入 raw。
+- 如果用户传入普通文本，直接把用户原文完整传给 `kb ingest --type thought|note --text ...` 或 `--text-file`。
 - 写入前先用 `kb search` 或 `kb index` 了解已有知识，避免重复建页。
-- 原料层 immutable：不要改写 `raw/*` 正文，只能用 `kb compiled` 回填状态和标签。
+- 原料层 immutable：`raw/*` 创建后只读，不改正文也不回填 metadata；`kb compiled` 只写独立状态文件。
 - 编译层由你用 LLM 维护，但每次写入都必须通过 CLI。
 - 查询时优先读编译层；只有细节不足时才回溯原料层。
 

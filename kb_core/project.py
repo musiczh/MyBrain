@@ -8,6 +8,11 @@ from .errors import KbNotFoundError, ValidationError
 from .models import dump_yaml, load_yaml
 
 
+DEFAULT_PROJECT_NAME = "My Brain"
+DEFAULT_DATA_DIR_NAME = "mybrain"
+DEFAULT_KB_DIR_NAME = "default"
+
+
 DEFAULT_CATEGORIES = """# 分类规则
 
 - 技术概念：编程语言、框架、工具、架构模式。
@@ -49,20 +54,27 @@ class Project:
         self._config: dict[str, Any] | None = None
 
     @classmethod
-    def resolve(cls, start: Path | None = None) -> "Project":
+    def default_root(cls) -> Path:
+        data_home = os.environ.get("XDG_DATA_HOME")
+        base = Path(data_home).expanduser() if data_home else Path.home() / ".local" / "share"
+        return (base / DEFAULT_DATA_DIR_NAME / DEFAULT_KB_DIR_NAME).resolve()
+
+    @classmethod
+    def resolve(cls, start: Path | None = None, *, auto_init: bool = True) -> "Project":
+        """Resolve the single local knowledge base.
+
+        Runtime commands deliberately do not walk up from cwd. A knowledge base is
+        user-local state, not project-local state, so default usage always lands in
+        one fixed directory. KB_ROOT remains an explicit override for tests or
+        advanced users.
+        """
         env_root = os.environ.get("KB_ROOT")
-        if env_root:
-            root = Path(env_root).expanduser().resolve()
-            if (root / ".kb").is_dir():
-                return cls(root)
-            raise KbNotFoundError("KB_ROOT does not point to an initialized knowledge base", root=str(root))
-        current = (start or Path.cwd()).resolve()
-        if current.is_file():
-            current = current.parent
-        for candidate in [current, *current.parents]:
-            if (candidate / ".kb").is_dir():
-                return cls(candidate)
-        raise KbNotFoundError("knowledge base is not initialized; run `kb init <name>` first", start=str(current))
+        root = Path(env_root).expanduser().resolve() if env_root else cls.default_root()
+        if (root / ".kb").is_dir():
+            return cls(root)
+        if auto_init:
+            return cls.init(root, DEFAULT_PROJECT_NAME)
+        raise KbNotFoundError("knowledge base is not initialized", root=str(root))
 
     @classmethod
     def init(cls, root: Path, name: str, force: bool = False) -> "Project":
@@ -73,6 +85,7 @@ class Project:
         root.mkdir(parents=True, exist_ok=True)
         for path in [
             kb_dir,
+            kb_dir / "raw-status",
             root / "raw" / "articles",
             root / "raw" / "thoughts",
             root / "raw" / "notes",
@@ -101,7 +114,15 @@ class Project:
         from .git_repo import GitRepo
 
         IndexEngine(project).build()
-        GitRepo(root).commit(f"chore: 初始化知识库 {name}")
+        GitRepo(root).commit(
+            f"chore: 初始化知识库 {name}",
+            [
+                kb_dir / "config.yaml",
+                root / ".gitignore",
+                root / "schema",
+                root / "wiki",
+            ],
+        )
         return project
 
     @property
