@@ -5,9 +5,9 @@ title: Effective harnesses for long-running agents
 created_at: "2026-06-17T21:39:02+08:00"
 ingested_at: "2026-06-17T21:39:02+08:00"
 content_hash: "sha256:174a27c4ca8a7c51a6acbe1cc2464eb564a00be1b2d83b68f630f202a02a0885"
-status: ingested
-compiled_at: null
-tags: []
+status: compiled
+compiled_at: "2026-06-17T21:41:11+08:00"
+tags: [Agent, 长任务工程化, 跨会话交接, 端到端验证]
 source_url: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents"
 author: Justin Young / Anthropic
 ---
