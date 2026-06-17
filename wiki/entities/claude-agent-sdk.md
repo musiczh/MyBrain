@@ -5,9 +5,9 @@ title: Claude Agent SDK
 slug: claude-agent-sdk
 aliases: []
 created_at: "2026-06-17T21:40:22+08:00"
-updated_at: "2026-06-17T21:40:22+08:00"
+updated_at: "2026-06-17T21:41:06+08:00"
 sources: [src_20260617_ehuczv]
-related: [summary_src_20260617_ehuczv, entity_long-running-agents]
+related: [summary_src_20260617_ehuczv, entity_long-running-agents, topic_agent-长任务工程化]
 ---
 
 # Claude Agent SDK
@@ -20,4 +20,5 @@ Claude Agent SDK 是 Anthropic 文章中讨论长时间运行 Agent harness 的�
 ## 关联
 - [[Summary for src_20260617_ehuczv]]
 - [[Long-running agents]]
+- [[Agent 长任务工程化]]
 <!-- kb:related:end -->
