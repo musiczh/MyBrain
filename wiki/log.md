@@ -10,3 +10,4 @@
 - 2026-06-17T21:40:38+08:00 | upsert topic | topic_跨会话交接协议 | 跨会话交接协议
 - 2026-06-17T21:40:47+08:00 | upsert topic | topic_ai-编码-agent-验证 | AI 编码 Agent 验证
 - 2026-06-17T21:40:56+08:00 | link | topic_agent-长任务工程化 <-> topic_跨会话交接协议
+- 2026-06-17T21:41:00+08:00 | link | topic_agent-长任务工程化 <-> topic_ai-编码-agent-验证

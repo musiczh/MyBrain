@@ -5,9 +5,9 @@ title: AI 编码 Agent 验证
 slug: ai-编码-agent-验证
 aliases: []
 created_at: "2026-06-17T21:40:47+08:00"
-updated_at: "2026-06-17T21:40:47+08:00"
+updated_at: "2026-06-17T21:41:00+08:00"
 sources: [src_20260617_ehuczv]
-related: [summary_src_20260617_ehuczv, entity_coding-agent, entity_feature-list]
+related: [summary_src_20260617_ehuczv, entity_coding-agent, entity_feature-list, topic_agent-长任务工程化]
 ---
 
 # AI 编码 Agent 验证
@@ -23,4 +23,5 @@ AI 编码 Agent 验证关注 Agent 如何证明功能真的可用，而不只是
 - [[Summary for src_20260617_ehuczv]]
 - [[Coding Agent]]
 - [[Feature list]]
+- [[Agent 长任务工程化]]
 <!-- kb:related:end -->
