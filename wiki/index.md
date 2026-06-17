@@ -1,6 +1,7 @@
 # 知识库索引
 
 ## 实体
+- [Initializer Agent](entities/initializer-agent.md) - `entity_initializer-agent`
 - [Long-running agents](entities/long-running-agents.md) - `entity_long-running-agents`
 
 ## 主题
