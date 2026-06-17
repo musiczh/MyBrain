@@ -1,0 +1,45 @@
+:root {
+  color-scheme: light dark;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+
+body {
+  margin: 0;
+  background: Canvas;
+  color: CanvasText;
+}
+
+main {
+  width: min(960px, calc(100vw - 40px));
+  margin: 40px auto;
+}
+
+a {
+  color: #0969da;
+}
+
+code {
+  font-size: 0.9em;
+  background: color-mix(in srgb, CanvasText 8%, transparent);
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, CanvasText 22%, transparent);
+  border-radius: 6px;
+  background: Canvas;
+  color: CanvasText;
+}
+
+.wikilink {
+  font-weight: 600;
+}
+
+.broken-link {
+  color: #b42318;
+}

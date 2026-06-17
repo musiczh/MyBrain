@@ -1,0 +1,30 @@
+[project]
+name = "knowledge-base"
+version = "0.1.0"
+description = "Local second-brain knowledge base backed by Markdown, SQLite FTS5, Git, and an agent-facing Skill."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "python-frontmatter>=1.1",
+  "PyYAML>=6.0",
+  "jieba>=0.42",
+  "markdown-it-py>=3.0",
+  "jinja2>=3.1",
+  "typer>=0.12",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-cov"]
+
+[project.scripts]
+kb = "kb_cli.cli:app"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["kb_core*", "kb_cli*"]
+
+[tool.setuptools.package-data]
+kb_core = ["templates/*.html", "templates/*.css"]

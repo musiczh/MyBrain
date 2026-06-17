@@ -1,0 +1,5 @@
+schema_version: 1
+name: My Brain
+render:
+  title: My Brain
+  theme: system
