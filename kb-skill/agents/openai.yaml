@@ -1,7 +1,7 @@
 interface:
   display_name: "Knowledge Base"
-  short_description: "将纯文本编译进本地第二大脑"
-  default_prompt: "Use $knowledge-base to remember this text in my local second-brain knowledge base."
+  short_description: "参考本地第二大脑回答问题，并主动沉淀高价值知识"
+  default_prompt: "Use $knowledge-base to answer with my local second-brain context and offer to save valuable insights."
 
 policy:
   allow_implicit_invocation: true

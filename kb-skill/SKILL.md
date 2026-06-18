@@ -1,18 +1,29 @@
 ---
 name: knowledge-base
-description: Use when the user wants to remember, organize, compile, query, or maintain knowledge in the local second-brain knowledge base.
+description: Use to reference, query, organize, compile, or maintain the user's local second-brain knowledge base. Trigger when the user mentions 知识库, 第二大脑, 我之前记过什么, 根据我的知识库回答, 参考已有积累, 个人经验, 回答问题需要个人上下文, remembering/collecting content, or when a conversation contains valuable thoughts, insights, preferences, decisions, or reusable lessons that should be offered for capture.
 ---
 
 # Knowledge Base Skill
 
-本 skill 让 Agent 把任意**已经读取为纯文本**的内容编译进本地个人知识库。知识库系统本身不具备 LLM 能力；你作为调用方 Agent 负责阅读、摘要、实体判断和综合回答，`kb` CLI 只负责确定性文件、索引、渲染、Git 与 lint 操作。
+本 skill 让 Agent 在回答问题时参考用户本地个人知识积累，并把值得长期保存的内容编译进本地知识库。知识库是用户已有积累的参考层，不是唯一数据来源；你需要结合当前对话、通用知识、必要的外部信息和知识库命中内容回答。知识库系统本身不具备 LLM 能力；你作为调用方 Agent 负责阅读、摘要、实体判断和综合回答，`kb` CLI 只负责确定性文件、索引、渲染、Git 与 lint 操作。
 
 ## 何时使用
 
+- 用户明确说“知识库”“第二大脑”“根据我的知识库回答”“查一下我之前记过什么”。
+- 用户提出可能受个人积累、偏好、经验、历史决策影响的问题，适合轻量参考知识库后再回答。
 - 用户说“记一下”“收藏这段”“整理进知识库”“做成第二大脑”。
+- 用户在聊天中表达了长期偏好、方法论、感悟、明确决策、复用经验或反复出现的想法，适合主动建议入库。
 - 用户询问“我之前记的某个主题/实体是什么”。
 - 用户要求生成或浏览本地 Wiki。
 - 用户要求检查知识库健康度、断链、孤立页或重复概念。
+
+## 使用原则
+
+- 知识库是参考，不是唯一依据。回答问题时不要只从知识库已有内容作答；命中知识库时，把它作为用户个人上下文融入答案。
+- 知识库未命中时，正常基于当前对话和可用知识回答，不要声称“知识库中有相关结论”。
+- 明确区分知识库已有结论、当前对话信息、外部资料和你的推断。
+- 普通聊天中的主动入库必须先询问用户确认；用户同意后再调用 `kb ingest` 和后续编译命令。
+- 不要把敏感信息、临时情绪、未明确的私密内容或低价值闲聊自动入库。
 
 ## 前置约束
 
@@ -31,9 +42,10 @@ description: Use when the user wants to remember, organize, compile, query, or m
 
 ## 决策路由
 
+- 显式知识库查询、根据已有积累回答、普通问题需要个人上下文：读 `workflows/query.md`。
+- 聊天中发现可长期沉淀的想法、偏好、决策、经验：读 `workflows/opportunistic-capture.md`。
 - 新增文章或较长资料：读 `workflows/ingest-article.md`。
 - 新增想法、灵感、短笔记：读 `workflows/ingest-thought.md`。
-- 查询已有知识：读 `workflows/query.md`。
 - 维护知识库：读 `workflows/maintain.md`。
 - 需要命令字段与 JSON 契约：读 `references/cli-reference.md`。
 
